@@ -58,6 +58,7 @@
         <th>Age</th>
         <th>Complaint</th>
         <th>Registered At</th>
+        <th>Est. Wait</th>
       </tr>
     </thead>
     <tbody>
@@ -68,6 +69,7 @@
         <td>{{ patient.age }}</td>
         <td>{{ patient.complaint }}</td>
         <td style="color:var(--muted); font-size:0.85rem;">{{ patient.registered_at }}</td>
+        <td style="color:var(--accent); font-weight:600;">{% if loop.first %}Next{% else %}~{{ loop.index0 * 5 }} mins{% endif %}</td>
       </tr>
       {% endfor %}
     </tbody>
