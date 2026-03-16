@@ -81,6 +81,10 @@
 <script>
   document.querySelector('form[action="/call-next"]').addEventListener('submit', function(e) {
     const btn = this.querySelector('button');
+    if (!confirm('Call the next patient from the queue?')) {
+      e.preventDefault();
+      return;
+    }
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Calling...';
   });
