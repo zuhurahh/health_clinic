@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Seen Today{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Patients Seen Today</h1>
+  <p>{{ seen_count }} patient{{ 's' if seen_count != 1 }} attended to so far today.</p>
+</div>
+
+<div style="margin-bottom:1.5rem;">
+  <a href="/" class="btn btn-outline">← Back to Queue</a>
+</div>
+
+<div class="card">
+  <div class="card-title">Completed Visits</div>
+
+  {% if seen_list %}
+  <table>
+    <thead>
+      <tr>
+        <th>Ticket</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Complaint</th>
+        <th>Registered At</th>
+        <th>Seen At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in seen_list %}
+      <tr>
+        <td><span class="ticket">#{{ patient.ticket_number }}</span></td>
+        <td><strong>{{ patient.name }}</strong></td>
+        <td>{{ patient.age }}</td>
+        <td>{{ patient.complaint }}</td>
+        <td style="color:var(--muted); font-size:0.85rem;">{{ patient.registered_at }}</td>
+        <td style="color:var(--primary); font-weight:600; font-size:0.85rem;">{{ patient.seen_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">📋</div>
+    <p>No patients have been seen yet today.<br>Call the next patient from the queue to get started.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

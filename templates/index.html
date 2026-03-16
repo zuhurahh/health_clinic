@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Patient Waiting Queue</h1>
+  <p>Patients are served in order of registration — first in, first out.</p>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-number">{{ waiting_count }}</div>
+    <div class="stat-label">Waiting Now</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">{{ seen_count }}</div>
+    <div class="stat-label">Seen Today</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">{{ waiting_count + seen_count }}</div>
+    <div class="stat-label">Total Today</div>
+  </div>
+</div>
+
+<!-- Action buttons -->
+<div style="display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+  <a href="/register" class="btn btn-primary">+ Register New Patient</a>
+
+  <form action="/call-next" method="POST" style="margin:0;">
+    <button type="submit" class="btn btn-accent">🔔 Call Next Patient</button>
+  </form>
+
+  <a href="/seen-today" class="btn btn-outline">View Seen Today →</a>
+</div>
+
+<!-- Queue table -->
+<div class="card">
+  <div class="card-title">Current Waiting List</div>
+
+  {% if waiting_list %}
+  <table>
+    <thead>
+      <tr>
+        <th>Ticket</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Complaint</th>
+        <th>Registered At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in waiting_list %}
+      <tr>
+        <td><span class="ticket">#{{ patient.ticket_number }}</span></td>
+        <td><strong>{{ patient.name }}</strong></td>
+        <td>{{ patient.age }}</td>
+        <td>{{ patient.complaint }}</td>
+        <td style="color:var(--muted); font-size:0.85rem;">{{ patient.registered_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">🪑</div>
+    <p>No patients currently waiting.<br>Register a new patient to get started.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

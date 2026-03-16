@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Register Patient{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Register New Patient</h1>
+  <p>Fill in the details below to add a patient to the waiting queue.</p>
+</div>
+
+<div class="card" style="max-width: 540px;">
+  <div class="card-title">Patient Details</div>
+
+  <form action="/register" method="POST">
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="e.g. Amina Suleiman" required />
+    </div>
+
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" placeholder="e.g. 34" min="1" max="120" required />
+    </div>
+
+    <div class="form-group">
+      <label for="complaint">Chief Complaint</label>
+      <input type="text" id="complaint" name="complaint" placeholder="e.g. Fever and headache" required />
+    </div>
+
+    <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+      <button type="submit" class="btn btn-primary">Add to Queue</button>
+      <a href="/" class="btn btn-outline">← Back to Queue</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
