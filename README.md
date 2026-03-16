@@ -54,7 +54,7 @@ You should see something like `Python 3.10.x`. If you get an error, download Pyt
 If you have Git installed:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/clinic-queue.git
+git clone https://github.com/zuhurahh/health_clinic.git
 cd clinic-queue
 ```
 
