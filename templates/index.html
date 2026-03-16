@@ -69,4 +69,12 @@
   </div>
   {% endif %}
 </div>
+
+<script>
+  document.querySelector('form[action="/call-next"]').addEventListener('submit', function(e) {
+    const btn = this.querySelector('button');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Calling...';
+  });
+</script>
 {% endblock %}

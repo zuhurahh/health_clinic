@@ -140,7 +140,10 @@
 
     /* ── BUTTONS ── */
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       padding: 0.65rem 1.4rem;
       border-radius: 8px;
       font-size: 0.9rem;
@@ -151,12 +154,24 @@
       transition: all 0.2s;
       font-family: 'DM Sans', sans-serif;
     }
+    .btn:disabled { opacity: 0.7; cursor: not-allowed; }
     .btn-primary { background: var(--primary); color: #fff; }
     .btn-primary:hover { background: #085048; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10,110,92,0.3); }
     .btn-accent  { background: var(--accent); color: #fff; }
     .btn-accent:hover  { background: #d98e1a; transform: translateY(-1px); }
     .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
     .btn-outline:hover { background: var(--primary-light); }
+
+    /* ── SPINNER ── */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── FORM ── */
     .form-group { margin-bottom: 1.25rem; }
