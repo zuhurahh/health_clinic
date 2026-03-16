@@ -42,6 +42,10 @@ def register():
             flash("Please enter a valid age.", "error")
             return redirect(url_for("register"))
 
+        if any(c.isdigit() for c in name):
+            flash("Name cannot contain numbers.", "error")
+            return redirect(url_for("register"))
+
         if priority not in ("Normal", "Urgent", "Emergency"):
             priority = "Normal"
 
