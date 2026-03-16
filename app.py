@@ -16,6 +16,7 @@ def index():
         waiting_list=queue.get_waiting_list(),
         waiting_count=queue.waiting_count(),
         seen_count=queue.seen_count(),
+        can_undo=queue.can_undo(),
     )
 
 
@@ -62,6 +63,17 @@ def call_next():
         flash(f"🔔 Now calling: {patient.name} — Ticket #{patient.ticket_number}", "success")
     else:
         flash("⚠️ The waiting queue is empty.", "error")
+    return redirect(url_for("index"))
+
+
+@app.route("/undo", methods=["POST"])
+def undo():
+    """Restores the last called patient back to the queue."""
+    patient = queue.undo_last_call()
+    if patient:
+        flash(f"↩️ Restored {patient.name} back to the queue.", "success")
+    else:
+        flash("⚠️ Nothing to undo.", "error")
     return redirect(url_for("index"))
 
 

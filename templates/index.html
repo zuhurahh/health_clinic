@@ -37,9 +37,14 @@
       <div style="font-family: 'DM Serif Display', serif; font-size:1.75rem;">{{ waiting_list[0].name }}</div>
       <div style="font-size:0.95rem; opacity:0.9;">Ticket #{{ waiting_list[0].ticket_number }} • {{ waiting_list[0].complaint }}</div>
     </div>
-    <form action="/call-next" method="POST">
-      <button type="submit" class="btn" style="background:#fff; color:var(--primary);" onclick="if(!confirm('Call the next patient from the queue?')){event.preventDefault();}">🔔 Call Patient</button>
-    </form>
+    <div style="display:flex; gap:0.5rem;">
+      <form action="/undo" method="POST">
+        <button type="submit" class="btn" style="background:rgba(255,255,255,0.2); color:#fff;" {% if not can_undo %}disabled{% endif %}>↩️ Undo</button>
+      </form>
+      <form action="/call-next" method="POST">
+        <button type="submit" class="btn" style="background:#fff; color:var(--primary);" onclick="if(!confirm('Call the next patient from the queue?')){event.preventDefault();}">🔔 Call Patient</button>
+      </form>
+    </div>
   </div>
 </div>
 {% endif %}

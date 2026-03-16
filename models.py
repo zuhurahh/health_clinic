@@ -46,6 +46,7 @@ class ClinicQueue:
         self._seen_today = []           # list of patients already attended to
         self._ticket_counter = 1        # auto-incrementing ticket number
         self._priority_counts = {"Emergency": 0, "Urgent": 0, "Normal": 0}
+        self._undo_stack = []           # stack for undo functionality
 
     def register_patient(self, name, age, complaint, priority="Normal"):
         """Creates a new Patient and adds them to the queue based on priority."""
@@ -78,8 +79,26 @@ class ClinicQueue:
             patient = self._waiting_queue.popleft()  # dequeue (FIFO: remove from front)
             patient.seen_at = datetime.now()
             self._seen_today.append(patient)
+            self._undo_stack.append(patient)
             return patient
         return None
+
+    def undo_last_call(self):
+        """
+        Restores the last called patient to the front of the queue.
+        Returns the patient if successful, None if nothing to undo.
+        """
+        if self._undo_stack:
+            patient = self._undo_stack.pop()
+            self._seen_today.remove(patient)
+            delattr(patient, 'seen_at')
+            self._waiting_queue.appendleft(patient)
+            return patient
+        return None
+
+    def can_undo(self):
+        """Returns True if there is a patient that can be restored."""
+        return len(self._undo_stack) > 0
 
     def get_waiting_list(self):
         """Returns a list of dicts for all patients currently waiting."""
