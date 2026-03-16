@@ -7,12 +7,13 @@ class Patient:
 
     PRIORITY_ORDER = {"Emergency": 0, "Urgent": 1, "Normal": 2}
 
-    def __init__(self, name, age, complaint, priority="Normal", notes=""):
+    def __init__(self, name, age, complaint, priority="Normal", notes="", gender=""):
         self.name = name
         self.age = age
         self.complaint = complaint
         self.priority = priority
         self.notes = notes
+        self.gender = gender
         self.registered_at = datetime.now()
         self.ticket_number = None  # assigned by the queue manager
 
@@ -32,6 +33,7 @@ class Patient:
             "complaint": self.complaint,
             "priority": self.priority,
             "notes": self.notes,
+            "gender": self.gender,
             "registered_at": self.registered_at.strftime("%d %b %Y, %I:%M %p"),
         }
 
@@ -50,9 +52,9 @@ class ClinicQueue:
         self._priority_counts = {"Emergency": 0, "Urgent": 0, "Normal": 0}
         self._undo_stack = []           # stack for undo functionality
 
-    def register_patient(self, name, age, complaint, priority="Normal", notes=""):
+    def register_patient(self, name, age, complaint, priority="Normal", notes="", gender=""):
         """Creates a new Patient and adds them to the queue based on priority."""
-        patient = Patient(name, age, complaint, priority, notes)
+        patient = Patient(name, age, complaint, priority, notes, gender)
         patient.ticket_number = self._ticket_counter
         self._ticket_counter += 1
         

@@ -30,6 +30,7 @@ def register():
         complaint = request.form.get("complaint", "").strip()
         priority = request.form.get("priority", "Normal").strip()
         notes = request.form.get("notes", "").strip()
+        gender = request.form.get("gender", "").strip()
 
         # Basic validation
         if not name or not age or not complaint:
@@ -51,7 +52,7 @@ def register():
         if priority not in ("Normal", "Urgent", "Emergency"):
             priority = "Normal"
 
-        patient = queue.register_patient(name, age, complaint, priority, notes)
+        patient = queue.register_patient(name, age, complaint, priority, notes, gender)
         flash(
             f"✅ {patient.name} registered successfully! Ticket #{patient.ticket_number} ({patient.priority}).",
             "success",
