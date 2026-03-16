@@ -7,6 +7,12 @@
   <p>Patients are served in order of registration — first in, first out.</p>
 </div>
 
+{% if waiting_count > 20 %}
+<div class="flash warning">
+  ⚠️ <strong>Queue Full!</strong> More than 20 patients are waiting. Consider expediting or adding more staff.
+</div>
+{% endif %}
+
 <!-- Stats -->
 <div class="stats">
   <div class="stat">

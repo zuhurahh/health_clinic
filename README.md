@@ -59,7 +59,6 @@ cd clinic-queue
 ```
 
 Or just download the ZIP from GitHub and unzip it, then open your terminal inside that folder.
-
 ---
 
 ### Step 3 — Install Flask
@@ -116,4 +115,4 @@ To stop the app, press `Ctrl + C` in the terminal.
 
 ## Author
 
-Built by [Your Name] — COS 202, MAAUN, 2026.
+Built by zuhra dangyatin — COS 202, MAAUN, 2026.
