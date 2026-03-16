@@ -58,7 +58,7 @@
     </thead>
     <tbody>
       {% for patient in waiting_list %}
-      <tr>
+      <tr{% if loop.first %} class="next-patient"{% endif %}>
         <td><span class="ticket">#{{ patient.ticket_number }}</span></td>
         <td><strong>{{ patient.name }}</strong></td>
         <td>{{ patient.age }}</td>
