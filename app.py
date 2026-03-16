@@ -39,7 +39,7 @@ def register():
             if age <= 0 or age > 120:
                 raise ValueError
         except ValueError:
-            flash("Please enter a valid age.", "error")
+            flash("Please enter a valid age (1-120).", "error")
             return redirect(url_for("register"))
 
         if any(c.isdigit() for c in name):
