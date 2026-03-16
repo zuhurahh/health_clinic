@@ -5,10 +5,13 @@ from collections import deque
 class Patient:
     """Represents a patient registered at the clinic."""
 
-    def __init__(self, name, age, complaint):
+    PRIORITY_ORDER = {"Emergency": 0, "Urgent": 1, "Normal": 2}
+
+    def __init__(self, name, age, complaint, priority="Normal"):
         self.name = name
         self.age = age
         self.complaint = complaint
+        self.priority = priority
         self.registered_at = datetime.now()
         self.ticket_number = None  # assigned by the queue manager
 
@@ -26,28 +29,44 @@ class Patient:
             "name": self.name,
             "age": self.age,
             "complaint": self.complaint,
+            "priority": self.priority,
             "registered_at": self.registered_at.strftime("%d %b %Y, %I:%M %p"),
         }
 
 
 class ClinicQueue:
     """
-    Manages the clinic's patient queue using a FIFO (Queue) data structure.
+    Manages the clinic's patient queue using a priority-based FIFO.
+    Emergency > Urgent > Normal. Within same priority, FIFO applies.
     Uses collections.deque for efficient front/back operations.
     """
 
     def __init__(self):
-        self._waiting_queue = deque()   # FIFO queue — patients waiting
+        self._waiting_queue = deque()   # patients waiting (priority-ordered)
         self._seen_today = []           # list of patients already attended to
         self._ticket_counter = 1        # auto-incrementing ticket number
+        self._priority_counts = {"Emergency": 0, "Urgent": 0, "Normal": 0}
 
-    def register_patient(self, name, age, complaint):
-        """Creates a new Patient and adds them to the back of the queue."""
-        patient = Patient(name, age, complaint)
+    def register_patient(self, name, age, complaint, priority="Normal"):
+        """Creates a new Patient and adds them to the queue based on priority."""
+        patient = Patient(name, age, complaint, priority)
         patient.ticket_number = self._ticket_counter
         self._ticket_counter += 1
-        self._waiting_queue.append(patient)   # enqueue (FIFO: add to back)
+        
+        self._insert_by_priority(patient)
+        self._priority_counts[priority] += 1
         return patient
+
+    def _insert_by_priority(self, patient):
+        """Insert patient based on priority: Emergency first, Urgent second, Normal last."""
+        priority = patient.priority
+        if priority == "Emergency":
+            self._waiting_queue.appendleft(patient)
+        elif priority == "Urgent":
+            insert_idx = self._priority_counts.get("Emergency", 0)
+            self._waiting_queue.insert(insert_idx, patient)
+        else:
+            self._waiting_queue.append(patient)
 
     def call_next_patient(self):
         """

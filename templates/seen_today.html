@@ -21,6 +21,7 @@
       <tr>
         <th>Ticket</th>
         <th>Name</th>
+        <th>Priority</th>
         <th>Age</th>
         <th>Complaint</th>
         <th>Registered At</th>
@@ -32,6 +33,7 @@
       <tr>
         <td><span class="ticket">#{{ patient.ticket_number }}</span></td>
         <td><strong>{{ patient.name }}</strong></td>
+        <td>{% if patient.priority == 'Emergency' %}<span style="color:var(--danger); font-weight:700;">Emergency</span>{% elif patient.priority == 'Urgent' %}<span style="color:var(--accent); font-weight:700;">Urgent</span>{% else %}<span style="color:var(--muted);">Normal</span>{% endif %}</td>
         <td>{{ patient.age }}</td>
         <td>{{ patient.complaint }}</td>
         <td style="color:var(--muted); font-size:0.85rem;">{{ patient.registered_at }}</td>

@@ -26,6 +26,15 @@
       <input type="text" id="complaint" name="complaint" placeholder="e.g. Fever and headache" required />
     </div>
 
+    <div class="form-group">
+      <label for="priority">Priority Level</label>
+      <select id="priority" name="priority" required>
+        <option value="Normal">Normal</option>
+        <option value="Urgent">Urgent</option>
+        <option value="Emergency">Emergency</option>
+      </select>
+    </div>
+
     <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
       <button type="submit" class="btn btn-primary">Add to Queue</button>
       <a href="/" class="btn btn-outline">← Back to Queue</a>
