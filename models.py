@@ -120,3 +120,14 @@ class ClinicQueue:
 
     def seen_count(self):
         return len(self._seen_today)
+
+    def average_wait_time(self):
+        """Returns average wait time in minutes for patients seen today."""
+        if not self._seen_today:
+            return 0
+        total_seconds = 0
+        for p in self._seen_today:
+            if hasattr(p, 'seen_at'):
+                wait = (p.seen_at - p.registered_at).total_seconds()
+                total_seconds += wait
+        return int(total_seconds / len(self._seen_today) / 60)

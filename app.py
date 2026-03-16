@@ -17,6 +17,7 @@ def index():
         waiting_count=queue.waiting_count(),
         seen_count=queue.seen_count(),
         can_undo=queue.can_undo(),
+        avg_wait=queue.average_wait_time(),
     )
 
 
