@@ -29,13 +29,24 @@
   </div>
 </div>
 
+{% if waiting_list %}
+<div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, #085048 100%); color: #fff;">
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+    <div>
+      <div style="font-size:0.85rem; opacity:0.8; margin-bottom:0.25rem;">NOW CALLING</div>
+      <div style="font-family: 'DM Serif Display', serif; font-size:1.75rem;">{{ waiting_list[0].name }}</div>
+      <div style="font-size:0.95rem; opacity:0.9;">Ticket #{{ waiting_list[0].ticket_number }} • {{ waiting_list[0].complaint }}</div>
+    </div>
+    <form action="/call-next" method="POST">
+      <button type="submit" class="btn" style="background:#fff; color:var(--primary);" onclick="if(!confirm('Call the next patient from the queue?')){event.preventDefault();}">🔔 Call Patient</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
 <!-- Action buttons -->
 <div style="display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
   <a href="/register" class="btn btn-primary">+ Register New Patient</a>
-
-  <form action="/call-next" method="POST" style="margin:0;">
-    <button type="submit" class="btn btn-accent">🔔 Call Next Patient</button>
-  </form>
 
   <a href="/seen-today" class="btn btn-outline">View Seen Today →</a>
 </div>
@@ -87,16 +98,6 @@
 </div>
 
 <script>
-  document.querySelector('form[action="/call-next"]').addEventListener('submit', function(e) {
-    const btn = this.querySelector('button');
-    if (!confirm('Call the next patient from the queue?')) {
-      e.preventDefault();
-      return;
-    }
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Calling...';
-  });
-
   document.getElementById('search').addEventListener('input', function() {
     const query = this.value.toLowerCase();
     const rows = document.querySelectorAll('#queue-table tbody tr');
