@@ -40,13 +40,17 @@
   <a href="/seen-today" class="btn btn-outline">View Seen Today →</a>
 </div>
 
+<div style="margin-bottom:1.5rem;">
+  <input type="text" id="search" placeholder="Search patient by name..." style="max-width:300px;">
+</div>
+
 <!-- Queue table -->
 <div class="card">
   <div class="card-title">Current Waiting List</div>
 
   {% if waiting_list %}
   <div class="table-wrap">
-  <table>
+  <table id="queue-table">
     <thead>
       <tr>
         <th>Ticket</th>
@@ -87,6 +91,15 @@
     }
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Calling...';
+  });
+
+  document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#queue-table tbody tr');
+    rows.forEach(row => {
+      const name = row.cells[1].textContent.toLowerCase();
+      row.style.display = name.includes(query) ? '' : 'none';
+    });
   });
 </script>
 {% endblock %}
