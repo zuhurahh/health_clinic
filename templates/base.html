@@ -228,6 +228,7 @@
 <nav>
   <a class="nav-brand" href="/"><span>🏥</span> ClinicQ</a>
   <div class="nav-links">
+    <span id="clock" style="color:rgba(255,255,255,0.8); font-size:0.9rem; padding:0.5rem;"></span>
     <a href="/"            {% if request.path == '/'            %}class="active"{% endif %}>Queue</a>
     <a href="/register"    {% if request.path == '/register'    %}class="active"{% endif %}>Register Patient</a>
     <a href="/seen-today"  {% if request.path == '/seen-today'  %}class="active"{% endif %}>Seen Today</a>
@@ -250,6 +251,13 @@
 
 <script>
   (function() {
+    const clock = document.getElementById('clock');
+    function updateClock() {
+      clock.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
     const toggle = document.getElementById('theme-toggle');
     const saved = localStorage.getItem('theme');
     if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
