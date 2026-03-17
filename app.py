@@ -53,11 +53,7 @@ def register():
             priority = "Normal"
 
         patient = queue.register_patient(name, age, complaint, priority, notes, gender)
-        flash(
-            f"✅ {patient.name} registered successfully! Ticket #{patient.ticket_number} ({patient.priority}).",
-            "success",
-        )
-        return redirect(url_for("index"))
+        return render_template("register.html", success=True, patient=patient)
 
     return render_template("register.html")
 

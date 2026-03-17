@@ -7,10 +7,26 @@
   <p>Fill in the details below to add a patient to the waiting queue.</p>
 </div>
 
+{% if success %}
+<div id="ticket-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:1000;">
+  <div style="background:var(--surface); border-radius:16px; padding:2.5rem; text-align:center; max-width:360px; width:90%; box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <div style="font-size:3rem; margin-bottom:1rem;">🎫</div>
+    <div style="color:var(--primary); font-weight:700; font-size:1.1rem; margin-bottom:0.5rem;">PATIENT REGISTERED</div>
+    <div style="font-family:'DM Serif Display', serif; font-size:2.5rem; color:var(--primary); margin:1rem 0;">#{{ patient.ticket_number }}</div>
+    <div style="font-size:1.1rem; font-weight:600; margin-bottom:0.25rem;">{{ patient.name }}</div>
+    <div style="color:var(--muted); font-size:0.9rem;">{{ patient.priority }} • {{ patient.gender }} • Age {{ patient.age }}</div>
+    <div style="margin-top:1.5rem;">
+      <a href="/" class="btn btn-primary">Return to Queue</a>
+      <button onclick="document.getElementById('ticket-modal').style.display='none'; document.getElementById('reg-form').reset();" class="btn btn-outline" style="margin-top:0.5rem;">Register Another</button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <div class="card" style="max-width: 540px;">
   <div class="card-title">Patient Details</div>
 
-  <form action="/register" method="POST">
+  <form action="/register" method="POST" id="reg-form">
     <div class="form-group">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" placeholder="e.g. Amina Suleiman" required />
