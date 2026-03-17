@@ -7,8 +7,9 @@
   <p>{{ seen_count }} patient{{ 's' if seen_count != 1 }} attended to so far today.</p>
 </div>
 
-<div style="margin-bottom:1.5rem;">
+<div style="margin-bottom:1.5rem; display:flex; gap:1rem;">
   <a href="/" class="btn btn-outline">← Back to Queue</a>
+  <button onclick="window.print()" class="btn btn-primary">🖨️ Print Report</button>
 </div>
 
 <div class="card">

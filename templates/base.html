@@ -190,6 +190,14 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    @media print {
+      nav, .btn, .flash-wrap, .page-header p { display: none !important; }
+      body { background: #fff; color: #000; }
+      .card { box-shadow: none; border: 1px solid #ccc; }
+      .stat { border: 1px solid #ccc; }
+      .table-wrap { overflow: visible; }
+    }
+
     /* ── FORM ── */
     .form-group { margin-bottom: 1.25rem; }
     label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 0.4rem; color: var(--text); }
